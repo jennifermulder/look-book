@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useQuery, useMutation } from 'react';
 import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
+import { REMOVE_BOOK } from '../../../server/utils/mutations';
+import { GET_ME } from '../../../server/utils/queries';
 
 import { getMe, deleteBook } from '../utils/API';
 import Auth from '../utils/auth';
@@ -11,30 +13,39 @@ const SavedBooks = () => {
   // use this to determine if `useEffect()` hook needs to run again
   const userDataLength = Object.keys(userData).length;
 
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const token = Auth.loggedIn() ? Auth.getToken() : null;
+  const userData = () => {
+    const { loading, data } = useQuery(GET_ME, {
+      variables: { userData: userData }
+    });
+    // when QUERY_ME, return data in the me property, QUERY_USER, return data.user
+    const user = data?.me || data?.user || {};
+    const [handleDeleteBook] = useMutation(REMOVE_BOOK);
+  }
 
-        if (!token) {
-          return false;
-        }
+  // useEffect(() => {
+  //   const getUserData = async () => {
+  //     try {
+  //       const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-        const response = await getMe(token);
+  //       if (!token) {
+  //         return false;
+  //       }
 
-        if (!response.ok) {
-          throw new Error('something went wrong!');
-        }
+  //       const response = await getMe(token);
 
-        const user = await response.json();
-        setUserData(user);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  //       if (!response.ok) {
+  //         throw new Error('something went wrong!');
+  //       }
 
-    getUserData();
-  }, [userDataLength]);
+  //       const user = await response.json();
+  //       setUserData(user);
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+    // };
+
+    // getUserData();
+  // }, [userDataLength]);
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
