@@ -22,7 +22,6 @@ const resolvers = {
     addUser: async (parent, args) => {
       const user = await User.create(args);
       const token = signToken(user);
-      console.log("this is in mutation")
       return { token, user };
     },
     login: async (parent, { email, password }) => {
@@ -42,12 +41,6 @@ const resolvers = {
       return { token, user };
     },
     saveBook: async (parent, { bookData }, context) => {
-
-      // console.log("book dat", bookData);
-      // bookData = {bookId:"" ", title: "}
-
-      // saavbooked = {bookData}
-
   
       if (context.user) {
 
