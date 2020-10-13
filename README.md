@@ -24,7 +24,7 @@ When the user loads the server, they are presented with a search bar where they 
 To run program: node server
 
 ## Deployed Application
-DEPLOYED
+https://pure-wave-30954.herokuapp.com/
 
 ## Project Status
 This Google Book Search is complete in adherence with acceptance criteria
