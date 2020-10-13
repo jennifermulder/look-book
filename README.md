@@ -1,6 +1,6 @@
 # Google Book Search
 
-![](client/src/assets/images.jpg)
+![](client/src/assets/images/look-book.jpg)
 
 ## Purpose
 To create an application that provides a Search and Save for various books using Google utilizing an Appolo server and GraphQL in lieu of RESTful APIs.
